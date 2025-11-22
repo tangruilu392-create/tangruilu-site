@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+ <title>Lulu的故事主页</title>
+ <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Quicksand&display=swap" rel="stylesheet">
+ <style>
+   :root {
+     --bg: #fffaf0;
+     --text: #4b3f2f;
+     --accent: #e6c27a;
+     --card: #fffef8;
+   }
+   body.dark {
+     --bg: #1e1c1a;
+     --text: #f0e9d3;
+     --accent: #99814d;
+     --card: #2b2926;
+   }
+
+   body {
+     margin: 0;
+     font-family: 'Quicksand', 'ZCOOL KuaiLe', sans-serif;
+     background-color: var(--bg);
+     color: var(--text);
+     transition: background 0.4s, color 0.4s;
+     opacity: 0;
+     animation: fadeIn 1s ease-in forwards;
+     background-image: url('https://i.imgur.com/zJ2wHzN.png');
+     background-size: 150px;
+     background-repeat: repeat;
+     background-attachment: fixed;
+   }
+
+   @keyframes fadeIn {
+     to { opacity: 1; }
+   }
+
+   header {
+     text-align: center;
+     padding: 40px 20px 20px;
+     background-color: var(--card);
+     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+   }
+
+   header h1 {
+     font-family: 'ZCOOL KuaiLe', cursive;
+     font-size: 2.6em;
+     color: var(--accent);
+   }
+
+   header p {
+     font-size: 1.1em;
+     margin-top: 10px;
+   }
+
+   .container {
+     max-width: 900px;
+     margin: 30px auto;
+     padding: 0 20px;
+   }
+
+   .card {
+     background: var(--card);
+     border-radius: 12px;
+     padding: 20px;
+     margin-bottom: 25px;
+     box-shadow: 4px 4px 0 rgba(0,0,0,0.05);
+     transform: translateY(20px);
+     opacity: 0;
+     transition: all 0.6s ease-out;
+   }
+
+   .card.show {
+     opacity: 1;
+     transform: translateY(0);
+   }
+
+   h2 {
+     font-family: 'ZCOOL KuaiLe', cursive;
+     font-size: 1.5em;
+     margin-bottom: 12px;
+     color: var(--accent);
+   }
+
+   .toggle-theme {
+     position: fixed;
+     top: 15px;
+     right: 15px;
+     background: var(--card);
+     border: 1px solid var(--accent);
+     border-radius: 20px;
+     padding: 6px 12px;
+     cursor: pointer;
+   }
+
+   .info-table {
+     display: none;
+   }
+
+   .progress {
+     background: #e0cfa0;
+     height: 10px;
+     border-radius: 5px;
+     overflow: hidden;
+     margin-bottom: 12px;
+   }
+
+   .progress div {
+     height: 100%;
+     background-color: #d4a74d;
+     width: 0;
+     transition: width 1.2s ease-in-out;
+   }
+
+   .timeline-item {
+     border-left: 3px solid var(--accent);
+     margin-left: 10px;
+     padding-left: 15px;
+     margin-bottom: 15px;
+   }
+
+   .tabs {
+     display: flex;
+     margin-bottom: 15px;
+   }
+
+   .tab {
+     margin-right: 10px;
+     padding: 6px 12px;
+     background: var(--card);
+     border: 1px solid var(--accent);
+     border-radius: 8px;
+     cursor: pointer;
+   }
+
+   .tab.active {
+     background: var(--accent);
+     color: white;
+   }
+
+   .tab-content {
+     display: none;
+   }
+
+   .tab-content.active {
+     display: block;
+   }
+
+   footer {
+     text-align: center;
+     font-size: 0.9em;
+     padding: 20px;
+     color: var(--accent);
+   }
+
+   .avatar {
+     display: flex;
+     justify-content: center;
+     margin-bottom: 20px;
+   }
+
+   .avatar img {
+     width: 140px;
+     height: 140px;
+     border-radius: 50%;
+     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+     transition: transform 0.4s ease;
+   }
+
+   .avatar img:hover {
+     transform: scale(1.05);
+   }
+ </style>
+</head>
+<body>
+
+<button class="toggle-theme" onclick="toggleTheme()">🌙 主题切换</button>
+
+<header>
+  <h1>Lulu的主页 🐾</h1>
+  <p>「比起介绍我是谁，不如讲讲我最近都经历了什么。」</p>
+</header>
+
+<div class="container">
+
+  <div class="avatar">
+    <img src="default.jpg" alt="我的头像">
+  </div>
+
+  <div class="card">
+    <h2>👤 我的档案</h2>
+    <button onclick="toggleInfo()">点击展开 / 收起信息卡</button>
+    <div class="info-table" id="info">
+      <p><strong>姓名：</strong>Lulu</p>
+      <p><strong>学号：</strong>2-23</p>
+      <p><strong>学院：</strong>计算机学院</p>
+      <p><strong>专业：</strong>计算机科学与技术</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📖 关于我</h2>
+    <p>有时候我觉得，写网页就像在给未来的自己写信。我想记录的，从来不是我“做了什么”，而是我“为什么这样做”。</p>
+    <p>这个页面也是。我试图用一点奶油色、一点猫咪气息，一点点代码，讲一个属于我的版本。</p>
+  </div>
+
+  <div class="card">
+    <h2>🛠 我的能力值</h2>
+    <div><strong>HTML</strong></div>
+    <div class="progress"><div style="width: 30%"></div></div>
+    <div><strong>CSS</strong></div>
+    <div class="progress"><div style="width: 36%"></div></div>
+    <div><strong>创作</strong></div>
+    <div class="progress"><div style="width: 88%"></div></div>
+  </div>
+
+  <div class="card">
+    <h2>📅 我的轨迹</h2>
+    <div class="timeline-item"><strong>2023年9月：</strong>接触到完全陌生的领域</div>
+    <div class="timeline-item"><strong>2024年9月：</strong>开始尝试把代码写得“有情绪感”。</div>
+    <div class="timeline-item"><strong>2025年11月：</strong>第一次写出完全属于自己的网页！</div>
+  </div>
+
+  <div class="card">
+    <h2>📂 更多模块</h2>
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab(0)">近期任务</div>
+      <div class="tab" onclick="switchTab(1)">一些爱好</div>
+    </div>
+    <div class="tab-content active">
+      <ul>
+        <li>完成这个网页 ✨</li>
+        <li>写一个新的小故事</li>
+        <li>复习HTML语义结构</li>
+      </ul>
+    </div>
+    <div class="tab-content">
+      <ul>
+        <li>看看动漫和电影</li>
+        <li>画画和写作</li>
+        <li>收集好看的手帐字体网站</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📬 联系我</h2>
+    <p>📧 hello@trl.com</p>
+    <p>📷 <a href="https://weibo.com" target="_blank">微博</a></p>
+  </div>
+
+</div>
+
+<!-- 网易云播放器（iframe方式） -->
+<div style="text-align:center; margin-top: 10px;">
+  <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86"
+   src="https://music.163.com/outchain/player?type=2&id=1332484955&auto=1&height=66"></iframe>
+</div>
+<footer>
+  
+  「希望有一天，我也能成为别人的灵感。」
+</footer>
+
+<script>
+  function toggleInfo() {
+    const info = document.getElementById("info");
+    info.style.display = info.style.display === "block" ? "none" : "block";
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle("dark");
+  }
+
+  function switchTab(index) {
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".tab-content");
+    tabs.forEach(t => t.classList.remove("active"));
+    contents.forEach(c => c.classList.remove("active"));
+    tabs[index].classList.add("active");
+    contents[index].classList.add("active");
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.card').forEach(card => {
+    observer.observe(card);
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const bars = document.querySelectorAll(".progress div");
+    bars.forEach(bar => {
+      const width = bar.style.width;
+      bar.style.width = "0";
+      setTimeout(() => bar.style.width = width, 200);
+    });
+  });
+</script>
+</body>
+</html>
