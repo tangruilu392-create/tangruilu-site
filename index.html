@@ -13,11 +13,6 @@
 }
 
 body {
-  <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()" title="切换昼夜氛围">
-  <span class="theme-icon" id="themeIcon">☀️</span>
-  <span class="theme-text" id="themeText">白昼</span>
-</button>
-  
   background-color: #fff9f4;
   background-image: radial-gradient(#fde2d0 1.5px, transparent 1.5px);
   background-size: 20px 20px;
@@ -419,7 +414,8 @@ h1 {
 .cute-jump-btn:active {
   transform: translateY(0) scale(0.97);
 }
-  /* 昼夜切换悬浮胶囊 */
+
+/* 昼夜切换悬浮胶囊 */
 .theme-toggle-btn {
   position: fixed;
   top: 20px;
@@ -525,6 +521,12 @@ body.night-mode .gacha-bubble {
 </head>
 <body>
 
+<!-- ☀️/🌙 昼夜切换小胶囊（乖乖呆在页面最外层左上角） -->
+<button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()" title="切换昼夜氛围">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+  <span class="theme-text" id="themeText">白昼</span>
+</button>
+
 <div class="profile-card">
   <div class="avatar-wrapper">
     <img src="avatar.jpg" class="avatar" alt="我的头像">
@@ -534,7 +536,7 @@ body.night-mode .gacha-bubble {
   <h1>你好呀，我是lulu ✨</h1>
   <p class="subtitle">今天也在认真摸鱼Zzz</p>
 
-  <!-- 板块一：个人档案（干干净净，没有学号班级） -->
+  <!-- 板块一：个人档案 -->
   <div class="info-section">
     <div class="section-title">🍓 个人小档案</div>
     <div class="info-grid">
@@ -726,7 +728,7 @@ const GACHA_LIST = [
   { fortune: "大吉", title: "全天候幸运锦囊", content: "无论今天遇到什么破事，只要晚上能回到暖烘烘的被窝，你就是全天的大赢家。" },
   { fortune: "中吉", title: "心安理得的小确幸", content: "路过烘焙店闻到刚出炉的面包香气——请把这一秒算作今天生命给你的利息。" },
   { fortune: "特吉", title: "小宇宙永动机", content: "恭喜抽到第100号终极签文：今天宇宙特批，你所有未说出口的心愿，全部打折提前兑现！" },
-  
+
   // 🎓 101-115：准毕业生的精神状态大赏
   { fortune: "大吉", title: "论文隐形术", content: "今日宜：假装论文/报告不存在；只要我不打开文档，它就没有开始倒计时。" },
   { fortune: "大凶", title: "查重PTSD", content: "今日忌：回想任何需要写结论的事情，脑子里会自动弹窗提示‘查重率过高’。" },
@@ -761,7 +763,7 @@ const GACHA_LIST = [
   { fortune: "中吉", title: "朋友圈仅一人可见", content: "今日宜：发一条莫名其妙的胡言乱语朋友圈，让暗中观察你的人抓耳挠腮去猜。" },
   { fortune: "大凶", title: "群聊冷场王", content: "今天你发在群里的冷笑话有可能会让整个群陷入长达半小时的死寂，慎言！" },
   { fortune: "吉", title: "精神状态外包", content: "今天把‘我很正常’的面具摘下来五分钟，跟最好的朋友比赛谁发癫更在行。" },
-  { fortune: "小吉", title: "偷听心声耳塞", content: "今天少关心别人在想什么，大部分人脑子里其实也只有‘中午吃啥’的弹幕而已。" },
+  { fortune: "小吉", title: "偷听心声耳塞", content: "今天少关心别人在想什么，大部分人脑子里其实也只有‘中午吃啥’的弹幕而已。" }
 ];
 
 let isRolling = false;
@@ -798,7 +800,8 @@ function closeGachaModal(e) {
   }
   document.getElementById('gachaModal').classList.remove('active');
 }
-  function toggleTheme() {
+
+function toggleTheme() {
   const isNight = document.body.classList.toggle('night-mode');
   localStorage.setItem('lulu_theme', isNight ? 'night' : 'day');
   updateThemeView(isNight);
@@ -832,7 +835,6 @@ function updateThemeView(isNight) {
   }
 }
 
-// 页面加载时：优先读取上一次存的喜好，默认是白昼
 window.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('lulu_theme');
   if (savedTheme === 'night') {
