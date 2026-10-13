@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>💌 悄悄话投递站</title>
   
-  <!-- 引入 Supabase 稳定公共库 -->
-  <<script src="https://cdnjs.cloudflare.com/ajax/libs/supabase/2.39.8/supabase.min.js"></script>
-  
   <style>
     * {
       box-sizing: border-box;
@@ -28,7 +25,6 @@
       padding: 30px 16px;
     }
 
-    /* 欢迎弹窗遮罩 */
     .welcome-overlay {
       position: fixed;
       top: 0;
@@ -101,7 +97,6 @@
       pointer-events: none !important;
     }
 
-    /* 留言板常规布局 */
     .board-card {
       background: #ffffff;
       max-width: 440px;
@@ -310,18 +305,14 @@
     }
 
     const ADMIN_PASSWORD = "lulu";
-
     const SUPABASE_URL = 'https://urnmqzcmmvaeffeyxfvs.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVybm1xemNtbXZhZWZmZXl4ZnZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4OTc3MTUsImV4cCI6MjEwNzQ3MzcxNX0.ejghw_9Ae10sQ-5cpus2LzM4v14JtY4oJ2cmv09zzLQ';
 
-    let supabase = null;
-
-    function getSupabaseClient() {
-      if (!supabase && window.supabase) {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      }
-      return supabase;
-    }
+    const API_HEADERS = {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json'
+    };
 
     function formatDateTime(dateStr) {
       const date = new Date(dateStr);
@@ -357,22 +348,17 @@
       const container = document.getElementById('messagesList');
       const countLabel = document.getElementById('msgCount');
 
-      const client = getSupabaseClient();
-      if (!client) {
-        container.innerHTML = '<div style="text-align:center;font-size:12px;color:#ff9a8b;padding:10px;">云端库未能连接，刷新试试看～</div>';
-        return;
-      }
-
       container.innerHTML = '<div style="text-align:center;font-size:12px;color:#c4aca3;padding:10px;">正在拆阅信件...</div>';
 
       try {
-        const { data: messages, error } = await client
-          .from('guestbook')
-          .select('*')
-          .order('created_at', { ascending: false });
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook?select=*&order=created_at.desc`, {
+          method: 'GET',
+          headers: API_HEADERS
+        });
 
-        if (error) throw error;
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
 
+        const messages = await res.json();
         container.innerHTML = '';
         countLabel.innerText = `${messages.length} 条留言`;
 
@@ -402,22 +388,18 @@
         return;
       }
 
-      const client = getSupabaseClient();
-      if (!client) {
-        alert("云端连接还在准备中，请稍后再投递～");
-        return;
-      }
-
       const submitBtn = document.querySelector('.submit-btn');
       submitBtn.disabled = true;
       submitBtn.innerText = "正在塞进信箱... 📮";
 
       try {
-        const { error } = await client
-          .from('guestbook')
-          .insert([{ author: name, content: text }]);
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
+          method: 'POST',
+          headers: { ...API_HEADERS, 'Prefer': 'return=minimal' },
+          body: JSON.stringify([{ author: name, content: text }])
+        });
 
-        if (error) throw error;
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
 
         msgInput.value = '';
         loadMessages();
@@ -439,19 +421,13 @@
         return;
       }
 
-      const client = getSupabaseClient();
-      if (!client) {
-        alert("云端连接尚未就绪，稍后再试～");
-        return;
-      }
-
       try {
-        const { error } = await client
-          .from('guestbook')
-          .delete()
-          .eq('id', id);
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook?id=eq.${id}`, {
+          method: 'DELETE',
+          headers: API_HEADERS
+        });
 
-        if (error) throw error;
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
 
         loadMessages();
       } catch (err) {
@@ -461,22 +437,7 @@
     }
 
     window.onload = function() {
-      const timer = setInterval(() => {
-        if (window.supabase) {
-          clearInterval(timer);
-          loadMessages();
-        }
-      }, 300);
-
-      setTimeout(() => {
-        clearInterval(timer);
-        if (!window.supabase) {
-          const container = document.getElementById('messagesList');
-          if (container) {
-            container.innerHTML = '<div style="text-align:center;font-size:12px;color:#ff9a8b;padding:10px;">云端库未能连接，刷新试试看～</div>';
-          }
-        }
-      }, 5000);
+      loadMessages();
     };
   </script>
 </body>
