@@ -1,0 +1,6 @@
+[[redirects]]
+  from = "/api/supabase/*"
+  to = "https://urnmqzcmmvaeffeyxfvs.supabase.co/:splat"
+  status = 200
+  force = true
+  headers = {Access-Control-Allow-Origin = "*"}
