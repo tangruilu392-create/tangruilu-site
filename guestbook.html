@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>💌 悄悄话投递站</title>
   
-  <!-- 引入 Supabase 官方脚本库 -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- 引入 Supabase 稳定高速库 -->
+  <script src="https://registry.npmmirror.com/@supabase/supabase-js/2.39.8/files/dist/umd/supabase.js"></script>
   
   <style>
     * {
@@ -96,9 +96,9 @@
     }
 
     .overlay-hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
     }
 
     /* 留言板常规布局 */
@@ -302,7 +302,6 @@
   </div>
 
   <script>
-    // 1. 弹窗逻辑放在第一位，雷打不动，绝不罢工
     function enterBoard() {
       const modal = document.getElementById('welcomeModal');
       if (modal) {
@@ -310,10 +309,8 @@
       }
     }
 
-    // 2. 站长专属暗门密码
     const ADMIN_PASSWORD = "lulu";
 
-    // 3. 你的云端连接配置
     const SUPABASE_URL = 'https://urnmqzcmmvaeffeyxfvs.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVybm1xemNtbXZhZWZmZXl4ZnZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE4OTc3MTUsImV4cCI6MjEwNzQ3MzcxNX0.ejghw_9Ae10sQ-5cpus2LzM4v14JtY4oJ2cmv09zzLQ';
 
@@ -322,13 +319,12 @@
       if (window.supabase) {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       } else {
-        console.error("Supabase CDN 脚本未成功载入");
+        console.warn("Supabase 客户端正在排队装载...");
       }
     } catch (e) {
-      console.error("Supabase 初始化出错:", e);
+      console.error("Supabase 初始化异常:", e);
     }
 
-    // 格式化时间戳
     function formatDateTime(dateStr) {
       const date = new Date(dateStr);
       const year = date.getFullYear();
@@ -339,7 +335,6 @@
       return `${year}/${month}/${day} ${hours}:${minutes}`;
     }
 
-    // 渲染单张卡片
     function renderCard(item) {
       const author = item.author || "匿名小可爱";
       const text = item.content || "";
@@ -360,13 +355,16 @@
       return itemDiv;
     }
 
-    // 读取云端留言
     async function loadMessages() {
       const container = document.getElementById('messagesList');
       const countLabel = document.getElementById('msgCount');
 
+      if (!supabase && window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      }
+
       if (!supabase) {
-        container.innerHTML = '<div style="text-align:center;font-size:12px;color:#ff9a8b;padding:10px;">云端库未能连接，请检查网络或刷新试试～</div>';
+        container.innerHTML = '<div style="text-align:center;font-size:12px;color:#ff9a8b;padding:10px;">云端库未能连接，刷新试试看～</div>';
         return;
       }
 
@@ -397,7 +395,6 @@
       }
     }
 
-    // 投递留言
     async function sendMsg() {
       const nameInput = document.getElementById('nickname');
       const msgInput = document.getElementById('message');
@@ -408,6 +405,10 @@
       if (!text) {
         alert("写点悄悄话再投递吧～");
         return;
+      }
+
+      if (!supabase && window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
 
       if (!supabase) {
@@ -437,7 +438,6 @@
       }
     }
 
-    // 删除留言
     async function deleteMsg(id) {
       const pwd = prompt("🌸 触发站长暗门，请输入管理密码：");
       if (pwd === null) return;
@@ -445,6 +445,10 @@
       if (pwd !== ADMIN_PASSWORD) {
         alert("密码不对哦，可不能乱动别人的信件～");
         return;
+      }
+
+      if (!supabase && window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
       }
 
       try {
