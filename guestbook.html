@@ -133,6 +133,7 @@
     h2 {
       font-size: 18px;
       color: #4a3b32;
+      user-select: none;
     }
 
     .form-group {
@@ -275,7 +276,8 @@
   <!-- 留言板主体 -->
   <div class="board-card">
     <div class="top-bar">
-      <h2>💌 悄悄话信箱</h2>
+      <!-- 点击标题可以随时开启或注销管理员暗门 -->
+      <h2 onclick="toggleAdminMode()" style="cursor: pointer;" title="点击切换管理权限">💌 悄悄话信箱</h2>
       <a href="index.html" class="back-btn">← 回主页</a>
     </div>
 
@@ -314,6 +316,47 @@
       'Content-Type': 'application/json'
     };
 
+    // 管理员状态判断
+    let isAdmin = localStorage.getItem('is_guestbook_admin') === 'true';
+
+    // 获取本机发过的留言 ID 列表
+    function getMyMessageIds() {
+      try {
+        return JSON.parse(localStorage.getItem('my_guestbook_ids') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    // 记录一条新留言 ID 到本机
+    function saveMyMessageId(id) {
+      const ids = getMyMessageIds();
+      ids.push(id);
+      localStorage.setItem('my_guestbook_ids', JSON.stringify(ids));
+    }
+
+    // 切换管理员模式的暗门函数
+    function toggleAdminMode() {
+      if (isAdmin) {
+        if (confirm("已在管理模式，是否退出房东权限？")) {
+          isAdmin = false;
+          localStorage.removeItem('is_guestbook_admin');
+          alert("已恢复普通访客视角~");
+          loadMessages();
+        }
+      } else {
+        const pwd = prompt("🌸 开启房东暗门，请输入特权密码：");
+        if (pwd === ADMIN_PASSWORD) {
+          isAdmin = true;
+          localStorage.setItem('is_guestbook_admin', 'true');
+          alert("✨ 认证成功！所有信件的删除叉号已为你点亮。");
+          loadMessages();
+        } else if (pwd !== null) {
+          alert("密码不对哦，可不能乱动别人的信件～");
+        }
+      }
+    }
+
     function formatDateTime(dateStr) {
       const date = new Date(dateStr);
       const year = date.getFullYear();
@@ -329,6 +372,10 @@
       const text = item.content || "";
       const timeStr = formatDateTime(item.created_at);
 
+      const myIds = getMyMessageIds();
+      // 只要是管理员，或者这条留言是当前浏览器发出的，才显示删除叉号
+      const canDelete = isAdmin || myIds.includes(item.id);
+
       const itemDiv = document.createElement('div');
       itemDiv.className = 'msg-card';
       itemDiv.innerHTML = `
@@ -336,7 +383,7 @@
           <span class="msg-author">${author}</span>
           <div class="msg-header-right">
             <span class="msg-time">${timeStr}</span>
-            <button class="delete-btn" onclick="deleteMsg(${item.id})" title="删除留言">×</button>
+            ${canDelete ? `<button class="delete-btn" onclick="deleteMsg(${item.id})" title="删除留言">×</button>` : ''}
           </div>
         </div>
         <div class="msg-content">${text}</div>
@@ -360,7 +407,7 @@
 
         const messages = await res.json();
         container.innerHTML = '';
-        countLabel.innerText = `${messages.length} 条留言`;
+        countLabel.innerText = `${messages.length} 条留言${isAdmin ? ' (管理中)' : ''}`;
 
         if (messages.length === 0) {
           container.innerHTML = '<div style="text-align:center;font-size:12px;color:#c4aca3;padding:10px;">信箱空空的，快来投递第一封信吧～</div>';
@@ -393,13 +440,19 @@
       submitBtn.innerText = "正在塞进信箱... 📮";
 
       try {
+        // 请求返回完整数据，以便抓取新建留言的 ID
         const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
           method: 'POST',
-          headers: { ...API_HEADERS, 'Prefer': 'return=minimal' },
+          headers: { ...API_HEADERS, 'Prefer': 'return=representation' },
           body: JSON.stringify([{ author: name, content: text }])
         });
 
         if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+
+        const inserted = await res.json();
+        if (inserted && inserted[0] && inserted[0].id) {
+          saveMyMessageId(inserted[0].id); // 登记到自己的设备上
+        }
 
         msgInput.value = '';
         loadMessages();
@@ -413,13 +466,16 @@
     }
 
     async function deleteMsg(id) {
-      const pwd = prompt("🌸 触发站长暗门，请输入管理密码：");
-      if (pwd === null) return;
+      const myIds = getMyMessageIds();
+      const isMine = myIds.includes(id);
 
-      if (pwd !== ADMIN_PASSWORD) {
+      if (!isAdmin && !isMine) {
         alert("密码不对哦，可不能乱动别人的信件～");
         return;
       }
+
+      const confirmText = isAdmin && !isMine ? "确认使用房东权限删除这条访客留言吗？" : "确认撕掉这封悄悄话吗？";
+      if (!confirm(confirmText)) return;
 
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook?id=eq.${id}`, {
