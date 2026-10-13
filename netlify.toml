@@ -1,6 +1,12 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "*"
+
 [[redirects]]
   from = "/api/supabase/*"
   to = "https://urnmqzcmmvaeffeyxfvs.supabase.co/:splat"
   status = 200
   force = true
-  headers = {Access-Control-Allow-Origin = "*"}
