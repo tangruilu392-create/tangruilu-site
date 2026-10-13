@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>欢迎光临我的小宇宙</title>
+<title>欢迎光临我的小宇宙 ✨</title>
 
 <style>
 * {
@@ -157,12 +157,230 @@ h1 {
   color: #e06d53;
 }
 
+/* 🎰 猫咪扭蛋机互动区域 */
+.gacha-widget {
+  background: #fffaf7;
+  border: 1.5px dashed #ffd8ca;
+  border-radius: 20px;
+  padding: 16px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.gacha-cat-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.cat-face {
+  font-size: 26px;
+  animation: catNod 3s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes catNod {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px) rotate(2deg); }
+}
+
+.gacha-bubble {
+  background: #ffffff;
+  font-size: 11px;
+  color: #d96b52;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid #ffe1d5;
+  box-shadow: 0 2px 6px rgba(255, 183, 165, 0.12);
+}
+
+.gacha-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 130px;
+}
+
+.gacha-globe {
+  width: 100px;
+  height: 85px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 3px solid #ffefe8;
+  border-radius: 50px 50px 30px 30px;
+  box-shadow: inset 0 4px 10px rgba(255, 183, 165, 0.25), 0 4px 12px rgba(255, 183, 165, 0.15);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+}
+
+.capsule {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  position: absolute;
+  box-shadow: inset -2px -2px 0 rgba(0,0,0,0.08);
+}
+.c1 { background: #ffaaa5; bottom: 8px; left: 16px; }
+.c2 { background: #ffd3b6; bottom: 12px; left: 40px; }
+.c3 { background: #a8e6cf; bottom: 10px; left: 62px; }
+.c4 { background: #dcedc1; bottom: 26px; left: 26px; }
+.c5 { background: #ff8b94; bottom: 28px; left: 52px; }
+
+.gacha-base {
+  width: 116px;
+  height: 48px;
+  background: linear-gradient(180deg, #ff9a8b 0%, #ff6a88 100%);
+  border-radius: 12px 12px 20px 20px;
+  margin-top: -6px;
+  position: relative;
+  box-shadow: 0 6px 14px rgba(255, 106, 136, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gacha-slot {
+  width: 32px;
+  height: 18px;
+  background: #3e2e2b;
+  border-radius: 8px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.cat-paw-lever {
+  position: absolute;
+  right: -24px;
+  bottom: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transform-origin: left center;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.cat-paw-lever:hover {
+  transform: rotate(-12deg) scale(1.1);
+}
+
+.cat-paw-lever:active, .paw-pressing {
+  transform: rotate(28deg) scale(0.95) !important;
+}
+
+.paw-pad {
+  font-size: 28px;
+  filter: drop-shadow(0 3px 5px rgba(255, 106, 136, 0.35));
+}
+
+.globe-shaking .capsule {
+  animation: capsuleBounce 0.35s ease-in-out infinite alternate;
+}
+
+@keyframes capsuleBounce {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-16px) rotate(45deg); }
+}
+
+/* 💌 抽签拍立得弹窗 */
+.gacha-modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(92, 77, 77, 0.4);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.gacha-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.fortune-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 24px 20px;
+  max-width: 300px;
+  width: 85%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(255, 170, 165, 0.3);
+  border: 3px solid #ffefe8;
+  transform: scale(0.7) rotate(-5deg);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gacha-modal-overlay.active .fortune-card {
+  transform: scale(1) rotate(0deg);
+}
+
+.card-pin {
+  font-size: 20px;
+  margin-top: -12px;
+  margin-bottom: 6px;
+}
+
+.fortune-badge {
+  display: inline-block;
+  background: #ffe3d9;
+  color: #e06d53;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.fortune-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4a3b32;
+  margin-bottom: 8px;
+}
+
+.fortune-content {
+  font-size: 13px;
+  color: #6b534b;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+.fortune-close-btn {
+  background: linear-gradient(135deg, #ff9a8b 0%, #ff6a88 100%);
+  color: #fff;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 24px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 106, 136, 0.3);
+  transition: transform 0.2s;
+}
+
+.fortune-close-btn:hover {
+  transform: scale(1.05);
+}
+
 /* 底部按钮外层居中容器 */
 .action-section {
   margin-top: 24px;
 }
 
-/* 果冻渐变跳转按钮本体 */
 .cute-jump-btn {
   display: inline-flex;
   align-items: center;
@@ -209,7 +427,7 @@ h1 {
   <h1>你好呀，我是lulu ✨</h1>
   <p class="subtitle">今天也在认真摸鱼Zzz</p>
 
-  <!-- 板块一 -->
+  <!-- 板块一：个人档案（干干净净，没有学号班级） -->
   <div class="info-section">
     <div class="section-title">🍓 个人小档案</div>
     <div class="info-grid">
@@ -222,8 +440,8 @@ h1 {
         <span class="info-value">大学在读 / 准毕业</span>
       </div>
       <div class="info-item">
-        <span class="info-label">班级学号</span>
-        <span class="info-value">2-23</span>
+        <span class="info-label">属性</span>
+        <span class="info-value">野生夜猫子 🐾</span>
       </div>
       <div class="info-item">
         <span class="info-label">出没地</span>
@@ -232,7 +450,32 @@ h1 {
     </div>
   </div>
 
-  <!-- 板块二 -->
+  <!-- 板块二：今日灵感扭蛋工坊 -->
+  <div class="gacha-widget">
+    <div class="gacha-cat-header">
+      <span class="cat-face">🐱</span>
+      <span class="gacha-bubble">戳我爪爪，赐你一签～</span>
+    </div>
+
+    <div class="gacha-machine">
+      <div class="gacha-globe" id="gachaGlobe">
+        <div class="capsule c1"></div>
+        <div class="capsule c2"></div>
+        <div class="capsule c3"></div>
+        <div class="capsule c4"></div>
+        <div class="capsule c5"></div>
+      </div>
+      
+      <div class="gacha-base">
+        <div class="gacha-slot"></div>
+        <button class="cat-paw-lever" id="pawLever" onclick="drawGacha()" title="按一下肉垫！">
+          <span class="paw-pad">🐾</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 板块三：快乐充电清单 -->
   <div class="info-section">
     <div class="section-title">🔋 快乐充电清单</div>
     <div class="hobbies-container">
@@ -246,6 +489,17 @@ h1 {
   </div>
 </div>
 
+<!-- 弹出的扭蛋签文小卡片 -->
+<div class="gacha-modal-overlay" id="gachaModal" onclick="closeGachaModal(event)">
+  <div class="fortune-card">
+    <div class="card-pin">📌</div>
+    <div class="fortune-badge" id="cardFortune">大吉</div>
+    <div class="fortune-title" id="cardTitle">今日宜摸鱼</div>
+    <div class="fortune-content" id="cardContent">这里是神仙指引内容...</div>
+    <button class="fortune-close-btn" onclick="closeGachaModal()">收下好运 ✨</button>
+  </div>
+</div>
+
 <!-- 跳转留言板传送门 -->
 <div class="action-section">
   <a href="guestbook.html" class="cute-jump-btn">
@@ -253,6 +507,155 @@ h1 {
     <span class="arrow-icon">→</span>
   </a>
 </div>
+
+<script>
+const GACHA_LIST = [
+  // 🎈 01-20：理直气壮的摆烂特权
+  { fortune: "大吉", title: "带薪发呆券", content: "今日宜：假装在认真看屏幕其实在神游；忌：试图理解任何超过三行的长难句。" },
+  { fortune: "吉", title: "能量守恒律", content: "今日宜：准许吃双份甜品；理由是大脑运转过度，急需高热量进行物理降温。" },
+  { fortune: "中吉", title: "电量仅存1%", content: "今日宜：把待办事项推到明天；忌：在疲惫的时候突然燃起改造人生的虚假斗志。" },
+  { fortune: "小吉", title: "野生猫猫作风", content: "今日宜：找个暖和的地方把自己团起来；忌：别人一喊你就立刻立正回应。" },
+  { fortune: "吉", title: "退堂鼓一级演奏家", content: "今日宜：遇到困难立刻躺下；忌：非要跟写不通的逻辑死磕到天荒地老。" },
+  { fortune: "大吉", title: "碳水救赎日", content: "今日宜：无视热量表大口嚼炸鸡；忌：吃一口看一眼称，纯属自寻烦恼。" },
+  { fortune: "小吉", title: "静音漫游", content: "今日宜：戴上降噪耳机假装听不见全世界；忌：好心当工具人。" },
+  { fortune: "中吉", title: "被窝引力超标", content: "今日宜：赖床超过半小时；宇宙都在帮你对抗地心引力，何必挣扎。" },
+  { fortune: "吉", title: "摆烂也是一种节约", content: "今日宜：停止内耗；什么都不做就不会犯错，简直逻辑闭环。" },
+  { fortune: "大吉", title: "空气吉他手", content: "今日宜：走路时在脑子里开个人演唱会；忌：突然停下来试图向别人解释你在笑什么。" },
+  { fortune: "末吉", title: "脑力熔断警告", content: "今日宜：把复杂问题交给未来的自己；他反正看起来比现在的你更能扛。" },
+  { fortune: "吉", title: "摸鱼达人特供", content: "今日宜：在工位上深呼吸三十次；忌：主动揽下看起来就很麻烦的差事。" },
+  { fortune: "小吉", title: "免打扰气泡", content: "今日宜：把所有群聊设置成免打扰；留出时间跟自己的影子待会儿。" },
+  { fortune: "中吉", title: "无意义万岁", content: "今日宜：做一些纯粹浪费时间但很开心的事，比如数地砖或者看落叶打转。" },
+  { fortune: "吉", title: "社交电量清零", content: "今日宜：回消息只用表情包；能打一个字绝不打一整句话。" },
+  { fortune: "大吉", title: "合法走神", content: "今日宜：盯着窗外的云发呆十分钟；云都在飘，你凭什么不能飘？" },
+  { fortune: "小吉", title: "晚睡辩护词", content: "今日宜：在深夜享受没有闹钟催促的自由；忌：在两点半突然反思人生。" },
+  { fortune: "中吉", title: "假装掉线", content: "今日宜：已读不回一阵子；毕竟连服务器都有维护更新的时候呢。" },
+  { fortune: "吉", title: "快乐优先令", content: "今日宜：先做让自己开心的事，正经事留到世界末日前夕再去补。" },
+  { fortune: "大吉", title: "零期待的一天", content: "今日宜：不对今天抱有任何伟大宏愿；平平淡淡混过去就是最大的胜利。" },
+
+  // 🌿 21-40：温柔治愈与微光玄学
+  { fortune: "大吉", title: "云层背后的盲盒", content: "今日宜：走在路上多抬头看两眼；宇宙悄悄在云里捏了一只小动物送你。" },
+  { fortune: "吉", title: "抛硬币的秘密", content: "纠结的事抛个硬币吧——不是听天由命，而是它在空中的瞬间，你心里早就有了偏向。" },
+  { fortune: "中吉", title: "晚风配方", content: "今日宜：在天色将暗未暗时出门吹吹风；日落把整座城市都泡成了蜜桃色。" },
+  { fortune: "小吉", title: "落叶的拥抱", content: "今日宜：踩一踩干燥碎裂的枯叶；咔嚓一声，是秋天替你捏爆了今天的小烦恼。" },
+  { fortune: "吉", title: "植物光合指南", content: "今天哪怕只吸收到十分钟阳光，也足够支撑你把背挺得直一点啦。" },
+  { fortune: "大吉", title: "迟到的好运", content: "有些好事不是不来，是正在排队过安检；稍微有点耐心，它比你想象的更想奔向你。" },
+  { fortune: "中吉", title: "不期而遇的甜", content: "今天会碰巧撞上一杯温度刚好的热饮，或者恰好踩中一首合拍的老歌。" },
+  { fortune: "小吉", title: "心软保护罩", content: "善良是稀缺天赋，但今天记得把温柔分给自己一半，别全倒给别人。" },
+  { fortune: "吉", title: "雨天的特权", content: "如果外面下雨，那是天空替你说出了那些不想解释的叹息，安心听雨吧。" },
+  { fortune: "大吉", title: "自洽的小宇宙", content: "你不需要成为任何人的标准答案，今天你只做你自己的参考书。" },
+  { fortune: "中吉", title: "解冻时刻", content: "那些让你卡壳了很久的僵局，今天可能会在不经意的某个瞬间悄悄松动一条缝。" },
+  { fortune: "小吉", title: "漫步者的偏爱", content: "走一条平时没走过的弄堂吧，或许拐角处正好藏着一间很合眼缘的小杂货铺。" },
+  { fortune: "吉", title: "月光温酒", content: "今晚的月色很宽容，不管你今天有多狼狈，它照下来的时候都是一样皎洁的。" },
+  { fortune: "大吉", title: "慢半拍万岁", content: "走得慢一点没关系的，路边的野花野草本来就是为了走得慢的人才开的。" },
+  { fortune: "中吉", title: "口袋里的秘密", content: "摸一摸大衣口袋，可能藏着上个冬天留下的一张小票，或者一颗忘记拆开的糖。" },
+  { fortune: "小吉", title: "心事减重", content: "今天试着把装满心事的背包放下来一会儿，你的肩膀本来就不是用来抗风暴的。" },
+  { fortune: "吉", title: "偶遇一只猫", content: "今天遇到的流浪小猫如果多看了你一眼，就等于签收了一份免税的快乐。" },
+  { fortune: "大吉", title: "普通人的奇迹", content: "按时吃饭、喝足水、好好睡了一觉——恭喜你，今天已经成功完成了生命的伟大工程。" },
+  { fortune: "中吉", title: "回音壁", content: "你悄悄给出去的那些善意，正在换一种形状慢慢飘回你的身边。" },
+  { fortune: "小吉", title: "晚安吻", content: "今天辛苦啦，闭上眼睛的时候记得拍拍自己：今天我也表现得超级棒。" },
+
+  // 🍵 41-60：站长专属的私房小偏心
+  { fortune: "大吉", title: "半糖主义法则", content: "今日宜：来一杯冰摇茉莉奶绿半糖；凡事只尽八分力，剩下两分留着做梦。" },
+  { fortune: "大凶", title: "偷窥被捕令", content: "偷看站长的抽签机被抓个正着！罚你在留言板留下一句夸奖，否则水杯自动变冷水。" },
+  { fortune: "特吉", title: "站长的偏袒", content: "恭喜抽中隐藏款特权：今天站长在背后默默罩着你，遇到倒霉事可以全推给水逆。" },
+  { fortune: "中凶", title: "奶茶打翻预警", content: "今日忌：边走边喝奶茶试图玩手机；杯盖可能会在关键时刻背叛你的白衬衫。" },
+  { fortune: "小吉", title: "吸氧指标达成", content: "今日宜：去公园大口深呼吸；就当是替爬不上山但爱登山的站长吸了一份。" },
+  { fortune: "吉", title: "推理迷的直觉", content: "今日宜：相信第一眼不对劲的第六感；真凶往往就藏在最不起眼的选项里。" },
+  { fortune: "大凶", title: "年上者的凝视", content: "今天企图在长辈面前耍小聪明的计划会全面破产，建议乖乖认怂，少挨两句敲打。" },
+  { fortune: "吉", title: "脑洞着火中", content: "今日宜：突然在备忘录写下一句没人看得懂的荒诞小说设定，万一火了呢。" },
+  { fortune: "末凶", title: "耳机线打结之灾", content: "今日出门可能会遭遇耳机线缠成毛线球的酷刑，解不开就先别听了，听风吧。" },
+  { fortune: "特吉", title: "宇宙舒适圈绿卡", content: "准许你今天在属于自己的舒适角落无限期缩着，外面的纷扰与你无关。" },
+  { fortune: "小吉", title: "云吸猫通票", content: "今日宜：在网上看一小时小猫踩奶视频；这不算浪费时间，这叫精神充电。" },
+  { fortune: "中吉", title: "神秘作家的午后", content: "点一杯加冰饮料坐在窗边，假装自己是个正在构思连环谋杀案的落魄小说家。" },
+  { fortune: "大凶", title: "全糖反噬", content: "今天如果一时冲动点了全糖饮料，会陷入甜蜜而漫长的昏睡，后果自负哦。" },
+  { fortune: "吉", title: "耳机里的私奔", content: "今日宜：单曲循环那一首别人都不知道的冷门歌；这一刻世界只有你和旋律。" },
+  { fortune: "特吉", title: "免单幸运星", content: "虽然现实里可能不免单，但今天你在站长心里的好感度账户自动到账一万分。" },
+  { fortune: "小凶", title: "小指撞桌角之咒", content: "走路请看路！今天你的脚趾头对周围硬物具有极强的非理性吸引力。" },
+  { fortune: "中吉", title: "秘密情报交换", content: "今日宜：去留言板留下一句无人知晓的代号，看看会不会有同频的人心领神会。" },
+  { fortune: "吉", title: "推理小说家附体", content: "今天遇到说假话的人，你会一眼识破他眼神里的慌乱，但也别当场戳穿，笑笑就好。" },
+  { fortune: "大吉", title: "摸鱼准考证", content: "站长亲自盖章发证：今日你的摸鱼行为受代码保护，谁催你谁掉发。" },
+  { fortune: "小吉", title: "落雨晴天", content: "就算今天天色灰蒙蒙，心里也可以自备一把粉红色的透明雨伞。" },
+
+  // 💥 61-80：荒诞无厘头的当代精神状态
+  { fortune: "中吉", title: "NPC觉醒时刻", content: "今日宜：突然意识到自己是这个世界的主角，旁边指指点点的人都只是路人NPC。" },
+  { fortune: "末吉", title: "野生水母模拟器", content: "今日宜：像水母一样在空气里漫无目的地漂浮；无脑、透明，但活得很快乐。" },
+  { fortune: "大凶", title: "键盘失语症", content: "今天千万别跟人在网上辩论，键盘会突然打出一串乱码让你当场破功。" },
+  { fortune: "吉", title: "重力异常日", content: "今天椅子对你的吸力比平时大五倍，起不来纯属物理定律，不是你的错。" },
+  { fortune: "小吉", title: "宇宙信号接入", content: "如果今天突然打了个喷嚏，说明某个外星人正在用加密波段默默夸你可爱。" },
+  { fortune: "大吉", title: "理智离线许可", content: "今天准许做一件无伤大雅但蠢兮兮的事，比如跟微波炉倒计时比拼谁叫得响。" },
+  { fortune: "中凶", title: "拉链卡壳诅咒", content: "今天赶时间的时候，外套拉链大概率会卡在半路上，请预留五分钟解救拉链。" },
+  { fortune: "吉", title: "假装深沉指南", content: "遇到不想回答的问题，扶一下并不存在的眼镜沉吟三秒说：‘这件事很复杂。’" },
+  { fortune: "小吉", title: "情绪垃圾桶封口", content: "今天谁要是敢找你倒苦水，请立刻反弹给宇宙：‘退！退！退！’" },
+  { fortune: "大吉", title: "反向锦鲤附体", content: "你担心的那些坏事今天一件都不会发生，它们全都迷路在赶来的路上了。" },
+  { fortune: "中吉", title: "鸽子精的体面", content: "如果今天不想赴约，请理直气壮地说：‘我的猫说它今天需要我的心理疏导。’" },
+  { fortune: "末凶", title: "错峰崩溃", content: "今天排队崩溃的人太多了，建议把你的情绪崩溃延期到下周二下午三点。" },
+  { fortune: "吉", title: "碳酸泡泡脑", content: "晃晃脑袋，是不是听到了汽水开盖的声音？今天就该像气泡一样到处乱蹦跶。" },
+  { fortune: "大凶", title: "电量告急悬崖", content: "手机电量低于20%时请立刻找充电宝，不要赌你的运气，它跑得比你快。" },
+  { fortune: "小吉", title: "发财梦入场券", content: "今晚做个买彩票中五千万的大梦吧，税后四千万记得在梦里分我一千万买糖吃。" },
+  { fortune: "中吉", title: "当代鲁滨逊", content: "把工位/书桌当成无人荒岛，每一份外卖都是海浪冲上来的生存物资。" },
+  { fortune: "吉", title: "沉默是金沙", content: "不想说话的时候就抿嘴笑，别人会觉得你高深莫测，其实你只是在放空。" },
+  { fortune: "大吉", title: "逃避可耻但超有用", content: "逃跑不仅不丢人，而且跑得快的话风吹在脸上还挺凉快呢。" },
+  { fortune: "小凶", title: "错把糖当盐", content: "今天做饭或者泡饮品请擦亮眼睛，别把醋当可乐一口闷下去了。" },
+  { fortune: "中吉", title: "野生仙人掌模式", content: "今天谁靠近你挑刺，你就把刺竖起来；软柿子才会被人捏，仙人掌不会。" },
+
+  // 🔮 81-100：小玄学与人际防坑指南
+  { fortune: "吉", title: "读心术护符", content: "今天别听别人嘴里说了什么漂亮话，看他手里到底为你端来了一杯什么。" },
+  { fortune: "大吉", title: "气场全开日", content: "今天穿上你最喜欢的那双鞋，走起路来会自带两米八的无形鼓风机。" },
+  { fortune: "中吉", title: "告别内耗灵药", content: "凡是让你感到不舒服的关系，都不需要硬撑，悄悄退后两步吹吹风吧。" },
+  { fortune: "小凶", title: "过度脑补警告", content: "对方可能只是手机掉进了沙发缝，不要用八百字小作文推理他是不是讨厌你。" },
+  { fortune: "吉", title: "直觉雷达开机", content: "第一眼看着就不舒服的人，往后接触八成也是个坑，相信身体的防卫本能。" },
+  { fortune: "大吉", title: "小人退散符", content: "今天敢在你面前嚼舌根的人，出门鞋带都会散三次，因果报应来得飞快。" },
+  { fortune: "中吉", title: "迟钝力修炼", content: "有时候‘少根筋’不是缺点，是宇宙为了保护你脆弱神经特意给装的减震垫。" },
+  { fortune: "小吉", title: "心软止痛贴", content: "不回消息不是你的错，世界很吵，你有权给自己挑一个安静的角落。" },
+  { fortune: "吉", title: "翻篇大师", content: "昨天那些倒霉事已经死在了午夜十二点，今天站在这里的是全新的你。" },
+  { fortune: "大吉", title: "磁场校准", content: "今天多跟那些笑声像杠铃一样爽朗的朋友待在一起，晦气会被当场震碎。" },
+  { fortune: "中凶", title: "画饼过敏症", content: "今天谁要是给你描绘宏伟蓝图却不掏现成的好处，请微笑着在心里打叉。" },
+  { fortune: "吉", title: "分寸感结界", content: "保持距离是保护关系最好的防腐剂，今天谁也不许越过你的安全三米线。" },
+  { fortune: "小吉", title: "逆行闪避", content: "今天如果感觉诸事不顺，立刻找个借口去洗手间洗把脸，重置一下时间线。" },
+  { fortune: "大吉", title: "天生反骨的幸运", content: "别人都说不行的路，你今天偏要去踩两脚，搞不好踩出一块狗屎运的金子。" },
+  { fortune: "中吉", title: "借光者", content: "自己电量不足的时候，去看看路边奔跑的小狗，蹭一点它们身上过剩的快乐。" },
+  { fortune: "小凶", title: "逞强受挫", content: "搬不动的重东西喊别人一声，别跟自己的腰较劲，腰比面子贵多了。" },
+  { fortune: "吉", title: "被遗忘的花期", content: "别看别人开得热闹就着急，你的花期稍微有点晚，但开出来肯定是最甜的一朵。" },
+  { fortune: "大吉", title: "全天候幸运锦囊", content: "无论今天遇到什么破事，只要晚上能回到暖烘烘的被窝，你就是全天的大赢家。" },
+  { fortune: "中吉", title: "心安理得的小确幸", content: "路过烘焙店闻到刚出炉的面包香气——请把这一秒算作今天生命给你的利息。" },
+  { fortune: "特吉", title: "小宇宙永动机", content: "恭喜抽到第100号终极签文：今天宇宙特批，你所有未说出口的心愿，全部打折提前兑现！" }
+];
+
+let isRolling = false;
+
+function drawGacha() {
+  if (isRolling) return;
+  isRolling = true;
+
+  const lever = document.getElementById('pawLever');
+  const globe = document.getElementById('gachaGlobe');
+
+  lever.classList.add('paw-pressing');
+  globe.classList.add('globe-shaking');
+
+  setTimeout(() => {
+    lever.classList.remove('paw-pressing');
+    globe.classList.remove('globe-shaking');
+    isRolling = false;
+
+    const randomIndex = Math.floor(Math.random() * GACHA_LIST.length);
+    const item = GACHA_LIST[randomIndex];
+
+    document.getElementById('cardFortune').innerText = item.fortune;
+    document.getElementById('cardTitle').innerText = item.title;
+    document.getElementById('cardContent').innerText = item.content;
+
+    document.getElementById('gachaModal').classList.add('active');
+  }, 600);
+}
+
+function closeGachaModal(e) {
+  if (e && e.target !== e.currentTarget && !e.target.classList.contains('fortune-close-btn')) {
+    return;
+  }
+  document.getElementById('gachaModal').classList.remove('active');
+}
+</script>
 
 </body>
 </html>
