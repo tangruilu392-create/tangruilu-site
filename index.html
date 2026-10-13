@@ -13,6 +13,11 @@
 }
 
 body {
+  <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()" title="切换昼夜氛围">
+  <span class="theme-icon" id="themeIcon">☀️</span>
+  <span class="theme-text" id="themeText">白昼</span>
+</button>
+  
   background-color: #fff9f4;
   background-image: radial-gradient(#fde2d0 1.5px, transparent 1.5px);
   background-size: 20px 20px;
@@ -414,6 +419,108 @@ h1 {
 .cute-jump-btn:active {
   transform: translateY(0) scale(0.97);
 }
+  /* 昼夜切换悬浮胶囊 */
+.theme-toggle-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 2px solid #ffefe8;
+  border-radius: 999px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 183, 165, 0.25);
+  z-index: 900;
+  font-family: inherit;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-toggle-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 10px 24px rgba(255, 183, 165, 0.35);
+}
+
+.theme-icon {
+  font-size: 16px;
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+
+.theme-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #5c4d4d;
+}
+
+/* 全局平滑换装过渡 */
+body, .profile-card, .info-section, .info-item, .hobby-pill, .fortune-card, .gacha-widget {
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* 🌙 深夜模式专用皮肤（黑巧芋泥配色） */
+body.night-mode {
+  background-color: #261e23;
+  background-image: radial-gradient(#3a2e37 1.5px, transparent 1.5px);
+  color: #d1c4cb;
+}
+
+body.night-mode .theme-toggle-btn {
+  background: rgba(46, 38, 46, 0.85);
+  border-color: #5c4a5b;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+body.night-mode .theme-text {
+  color: #e9dcfb;
+}
+
+body.night-mode .profile-card,
+body.night-mode .info-item,
+body.night-mode .hobby-pill,
+body.night-mode .fortune-card {
+  background: #332832;
+  border-color: #4a3a49;
+  color: #ece0e7;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+body.night-mode .info-section,
+body.night-mode .gacha-widget {
+  background: #2b222a;
+  border-color: #524050;
+}
+
+body.night-mode h1,
+body.night-mode .fortune-title {
+  color: #f7eef3;
+}
+
+body.night-mode .subtitle {
+  color: #9c8993;
+}
+
+body.night-mode .section-title {
+  color: #ff9a8b;
+}
+
+body.night-mode .info-label {
+  color: #9e8c95;
+}
+
+body.night-mode .status-badge {
+  background: #5d4a75;
+  color: #e9dcfb;
+}
+
+body.night-mode .gacha-bubble {
+  background: #332832;
+  color: #ffb7c5;
+  border-color: #524050;
+}
 </style>
 </head>
 <body>
@@ -691,6 +798,48 @@ function closeGachaModal(e) {
   }
   document.getElementById('gachaModal').classList.remove('active');
 }
+  function toggleTheme() {
+  const isNight = document.body.classList.toggle('night-mode');
+  localStorage.setItem('lulu_theme', isNight ? 'night' : 'day');
+  updateThemeView(isNight);
+}
+
+function updateThemeView(isNight) {
+  const icon = document.getElementById('themeIcon');
+  const text = document.getElementById('themeText');
+  const badge = document.querySelector('.status-badge');
+  const bubble = document.querySelector('.gacha-bubble');
+  const subtitle = document.querySelector('.subtitle');
+
+  if (isNight) {
+    if (icon) {
+      icon.innerText = "🌙";
+      icon.style.transform = "rotate(360deg)";
+    }
+    if (text) text.innerText = "深夜";
+    if (badge) badge.innerText = "做梦中 💤";
+    if (bubble) bubble.innerText = "嘘…小猫睡着了，轻点戳";
+    if (subtitle) subtitle.innerText = "野生夜猫子已耗尽电量 Zzz";
+  } else {
+    if (icon) {
+      icon.innerText = "☀️";
+      icon.style.transform = "rotate(0deg)";
+    }
+    if (text) text.innerText = "白昼";
+    if (badge) badge.innerText = "在线中 ✨";
+    if (bubble) bubble.innerText = "戳我爪爪，赐你一签～";
+    if (subtitle) subtitle.innerText = "今天也在认真摸鱼Zzz";
+  }
+}
+
+// 页面加载时：优先读取上一次存的喜好，默认是白昼
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('lulu_theme');
+  if (savedTheme === 'night') {
+    document.body.classList.add('night-mode');
+    updateThemeView(true);
+  }
+});
 </script>
 
 </body>
