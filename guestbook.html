@@ -276,7 +276,7 @@
   <!-- 留言板主体 -->
   <div class="board-card">
     <div class="top-bar">
-      <!-- 点击标题可以随时开启或注销管理员暗门 -->
+      <!-- 点击标题可以随时开启或注销房东管理模式 -->
       <h2 onclick="toggleAdminMode()" style="cursor: pointer;" title="点击切换管理权限">💌 悄悄话信箱</h2>
       <a href="index.html" class="back-btn">← 回主页</a>
     </div>
@@ -316,13 +316,13 @@
       'Content-Type': 'application/json'
     };
 
-    // 管理员状态判断
     let isAdmin = localStorage.getItem('is_guestbook_admin') === 'true';
 
-    // 获取本机发过的留言 ID 列表
+    // 获取本机发过的留言 ID 列表，全部纯数字处理
     function getMyMessageIds() {
       try {
-        return JSON.parse(localStorage.getItem('my_guestbook_ids') || '[]');
+        const raw = JSON.parse(localStorage.getItem('my_guestbook_ids') || '[]');
+        return raw.map(id => Number(id)).filter(id => !isNaN(id));
       } catch (e) {
         return [];
       }
@@ -331,11 +331,21 @@
     // 记录一条新留言 ID 到本机
     function saveMyMessageId(id) {
       const ids = getMyMessageIds();
-      ids.push(id);
-      localStorage.setItem('my_guestbook_ids', JSON.stringify(ids));
+      const numId = Number(id);
+      if (!isNaN(numId) && !ids.includes(numId)) {
+        ids.push(numId);
+        localStorage.setItem('my_guestbook_ids', JSON.stringify(ids));
+      }
     }
 
-    // 切换管理员模式的暗门函数
+    // 从本机存储里移除某个 ID
+    function removeMyMessageId(id) {
+      const numId = Number(id);
+      const filtered = getMyMessageIds().filter(msgId => msgId !== numId);
+      localStorage.setItem('my_guestbook_ids', JSON.stringify(filtered));
+    }
+
+    // 切换管理员模式的暗门
     function toggleAdminMode() {
       if (isAdmin) {
         if (confirm("已在管理模式，是否退出房东权限？")) {
@@ -373,8 +383,8 @@
       const timeStr = formatDateTime(item.created_at);
 
       const myIds = getMyMessageIds();
-      // 只要是管理员，或者这条留言是当前浏览器发出的，才显示删除叉号
-      const canDelete = isAdmin || myIds.includes(item.id);
+      // 保证比对时完全处于纯数字维度
+      const canDelete = isAdmin || myIds.includes(Number(item.id));
 
       const itemDiv = document.createElement('div');
       itemDiv.className = 'msg-card';
@@ -440,7 +450,6 @@
       submitBtn.innerText = "正在塞进信箱... 📮";
 
       try {
-        // 请求返回完整数据，以便抓取新建留言的 ID
         const res = await fetch(`${SUPABASE_URL}/rest/v1/guestbook`, {
           method: 'POST',
           headers: { ...API_HEADERS, 'Prefer': 'return=representation' },
@@ -451,7 +460,7 @@
 
         const inserted = await res.json();
         if (inserted && inserted[0] && inserted[0].id) {
-          saveMyMessageId(inserted[0].id); // 登记到自己的设备上
+          saveMyMessageId(inserted[0].id);
         }
 
         msgInput.value = '';
@@ -467,10 +476,10 @@
 
     async function deleteMsg(id) {
       const myIds = getMyMessageIds();
-      const isMine = myIds.includes(id);
+      const isMine = myIds.includes(Number(id));
 
       if (!isAdmin && !isMine) {
-        alert("密码不对哦，可不能乱动别人的信件～");
+        alert("可不能乱动别人的信件哦～");
         return;
       }
 
@@ -485,6 +494,7 @@
 
         if (!res.ok) throw new Error(`HTTP error ${res.status}`);
 
+        removeMyMessageId(id);
         loadMessages();
       } catch (err) {
         console.error("删除失败:", err);
