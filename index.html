@@ -457,21 +457,21 @@ body, .profile-card, .info-section, .info-item, .hobby-pill, .fortune-card, .gac
   transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* 🌙 深夜模式专用皮肤（黑巧芋泥配色） */
+/* 🌙 深夜模式专用皮肤（高对比度优化版） */
 body.night-mode {
   background-color: #261e23;
   background-image: radial-gradient(#3a2e37 1.5px, transparent 1.5px);
-  color: #d1c4cb;
+  color: #f0e6ec;
 }
 
 body.night-mode .theme-toggle-btn {
-  background: rgba(46, 38, 46, 0.85);
-  border-color: #5c4a5b;
+  background: rgba(54, 44, 54, 0.9);
+  border-color: #6a5367;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 body.night-mode .theme-text {
-  color: #e9dcfb;
+  color: #ffffff;
 }
 
 body.night-mode .profile-card,
@@ -479,49 +479,52 @@ body.night-mode .info-item,
 body.night-mode .hobby-pill,
 body.night-mode .fortune-card {
   background: #332832;
-  border-color: #4a3a49;
-  color: #ece0e7;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  border-color: #4e3a4b;
+  color: #f2e7ee;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
 body.night-mode .info-section,
 body.night-mode .gacha-widget {
   background: #2b222a;
-  border-color: #524050;
+  border-color: #5e465a;
 }
 
 body.night-mode h1,
 body.night-mode .fortune-title {
-  color: #f7eef3;
+  color: #ffffff;
 }
 
 body.night-mode .subtitle {
-  color: #9c8993;
+  color: #dfced9; /* 清晰可辨的浅粉灰 */
 }
 
 body.night-mode .section-title {
-  color: #ff9a8b;
+  color: #ffaa9d;
 }
 
 body.night-mode .info-label {
-  color: #9e8c95;
+  color: #d8c5d1; /* 标签小字清晰明了 */
+}
+
+body.night-mode .info-value {
+  color: #ffffff; /* 档案数值高亮纯白 */
 }
 
 body.night-mode .status-badge {
-  background: #5d4a75;
-  color: #e9dcfb;
+  background: #6a4c82;
+  color: #ffffff;
 }
 
 body.night-mode .gacha-bubble {
-  background: #332832;
-  color: #ffb7c5;
-  border-color: #524050;
+  background: #3a2e39;
+  color: #ffccd5;
+  border-color: #6a5065;
 }
 </style>
 </head>
 <body>
 
-<!-- ☀️/🌙 昼夜切换小胶囊（乖乖呆在页面最外层左上角） -->
 <button class="theme-toggle-btn" id="themeToggle" onclick="toggleTheme()" title="切换昼夜氛围">
   <span class="theme-icon" id="themeIcon">☀️</span>
   <span class="theme-text" id="themeText">白昼</span>
@@ -619,7 +622,6 @@ body.night-mode .gacha-bubble {
 
 <script>
 const GACHA_LIST = [
-  // 🎈 01-20：理直气壮的摆烂特权
   { fortune: "大吉", title: "带薪发呆券", content: "今日宜：假装在认真看屏幕其实在神游；忌：试图理解任何超过三行的长难句。" },
   { fortune: "吉", title: "能量守恒律", content: "今日宜：准许吃双份甜品；理由是大脑运转过度，急需高热量进行物理降温。" },
   { fortune: "中吉", title: "电量仅存1%", content: "今日宜：把待办事项推到明天；忌：在疲惫的时候突然燃起改造人生的虚假斗志。" },
@@ -640,8 +642,6 @@ const GACHA_LIST = [
   { fortune: "中吉", title: "假装掉线", content: "今日宜：已读不回一阵子；毕竟连服务器都有维护更新的时候呢。" },
   { fortune: "吉", title: "快乐优先令", content: "今日宜：先做让自己开心的事，正经事留到世界末日前夕再去补。" },
   { fortune: "大吉", title: "零期待的一天", content: "今日宜：不对今天抱有任何伟大宏愿；平平淡淡混过去就是最大的胜利。" },
-
-  // 🌿 21-40：温柔治愈与微光玄学
   { fortune: "大吉", title: "云层背后的盲盒", content: "今日宜：走在路上多抬头看两眼；宇宙悄悄在云里捏了一只小动物送你。" },
   { fortune: "吉", title: "抛硬币的秘密", content: "纠结的事抛个硬币吧——不是听天由命，而是它在空中的瞬间，你心里早就有了偏向。" },
   { fortune: "中吉", title: "晚风配方", content: "今日宜：在天色将暗未暗时出门吹吹风；日落把整座城市都泡成了蜜桃色。" },
@@ -662,8 +662,6 @@ const GACHA_LIST = [
   { fortune: "大吉", title: "普通人的奇迹", content: "按时吃饭、喝足水、好好睡了一觉——恭喜你，今天已经成功完成了生命的伟大工程。" },
   { fortune: "中吉", title: "回音壁", content: "你悄悄给出去的那些善意，正在换一种形状慢慢飘回你的身边。" },
   { fortune: "小吉", title: "晚安吻", content: "今天辛苦啦，闭上眼睛的时候记得拍拍自己：今天我也表现得超级棒。" },
-
-  // 🍵 41-60：站长专属的私房小偏心
   { fortune: "大吉", title: "半糖主义法则", content: "今日宜：来一杯冰摇茉莉奶绿半糖；凡事只尽八分力，剩下两分留着做梦。" },
   { fortune: "大凶", title: "偷窥被捕令", content: "偷看站长的抽签机被抓个正着！罚你在留言板留下一句夸奖，否则水杯自动变冷水。" },
   { fortune: "特吉", title: "站长的偏袒", content: "恭喜抽中隐藏款特权：今天站长在背后默默罩着你，遇到倒霉事可以全推给水逆。" },
@@ -684,8 +682,6 @@ const GACHA_LIST = [
   { fortune: "吉", title: "推理小说家附体", content: "今天遇到说假话的人，你会一眼识破他眼神里的慌乱，但也别当场戳穿，笑笑就好。" },
   { fortune: "大吉", title: "摸鱼准考证", content: "站长亲自盖章发证：今日你的摸鱼行为受代码保护，谁催你谁掉发。" },
   { fortune: "小吉", title: "落雨晴天", content: "就算今天天色灰蒙蒙，心里也可以自备一把粉红色的透明雨伞。" },
-
-  // 💥 61-80：荒诞无厘头的当代精神状态
   { fortune: "中吉", title: "NPC觉醒时刻", content: "今日宜：突然意识到自己是这个世界的主角，旁边指指点点的人都只是路人NPC。" },
   { fortune: "末吉", title: "野生水母模拟器", content: "今日宜：像水母一样在空气里漫无目的地漂浮；无脑、透明，但活得很快乐。" },
   { fortune: "大凶", title: "键盘失语症", content: "今天千万别跟人在网上辩论，键盘会突然打出一串乱码让你当场破功。" },
@@ -706,8 +702,6 @@ const GACHA_LIST = [
   { fortune: "大吉", title: "逃避可耻但超有用", content: "逃跑不仅不丢人，而且跑得快的话风吹在脸上还挺凉快呢。" },
   { fortune: "小凶", title: "错把糖当盐", content: "今天做饭或者泡饮品请擦亮眼睛，别把醋当可乐一口闷下去了。" },
   { fortune: "中吉", title: "野生仙人掌模式", content: "今天谁靠近你挑刺，你就把刺竖起来；软柿子才会被人捏，仙人掌不会。" },
-
-  // 🔮 81-100：小玄学与人际防坑指南
   { fortune: "吉", title: "读心术护符", content: "今天别听别人嘴里说了什么漂亮话，看他手里到底为你端来了一杯什么。" },
   { fortune: "大吉", title: "气场全开日", content: "今天穿上你最喜欢的那双鞋，走起路来会自带两米八的无形鼓风机。" },
   { fortune: "中吉", title: "告别内耗灵药", content: "凡是让你感到不舒服的关系，都不需要硬撑，悄悄退后两步吹吹风吧。" },
@@ -728,8 +722,6 @@ const GACHA_LIST = [
   { fortune: "大吉", title: "全天候幸运锦囊", content: "无论今天遇到什么破事，只要晚上能回到暖烘烘的被窝，你就是全天的大赢家。" },
   { fortune: "中吉", title: "心安理得的小确幸", content: "路过烘焙店闻到刚出炉的面包香气——请把这一秒算作今天生命给你的利息。" },
   { fortune: "特吉", title: "小宇宙永动机", content: "恭喜抽到第100号终极签文：今天宇宙特批，你所有未说出口的心愿，全部打折提前兑现！" },
-
-  // 🎓 101-115：准毕业生的精神状态大赏
   { fortune: "大吉", title: "论文隐形术", content: "今日宜：假装论文/报告不存在；只要我不打开文档，它就没有开始倒计时。" },
   { fortune: "大凶", title: "查重PTSD", content: "今日忌：回想任何需要写结论的事情，脑子里会自动弹窗提示‘查重率过高’。" },
   { fortune: "吉", title: "草台班子顿悟", content: "今日宜：突然看开；只要意识到这个世界大部分时候也是个草台班子，你就不会再慌了。" },
@@ -738,8 +730,6 @@ const GACHA_LIST = [
   { fortune: "小吉", title: "假装深造", content: "今日宜：买一本极厚的大部头书垫在手肘下面，知识会通过物理扩散进入大脑。" },
   { fortune: "末凶", title: "早八诅咒延期", content: "虽然已经准毕业了，但今早惊醒以为有早八的心悸感，依然需要一杯奶茶才能抚平。" },
   { fortune: "吉", title: "成年人门票拒收", content: "社会想塞给你一张成熟懂事的门票，你反手把门票折成了一只纸飞机飞走了。" },
-
-  // 🕵️‍♀️ 116-130：悬疑推理作家的被害妄想日常
   { fortune: "大吉", title: "不在场证明成立", content: "今日宜：完美摸鱼；你的不在场证明毫无破绽，连猫都以为你今天很忙。" },
   { fortune: "大凶", title: "密室逃脱失败", content: "今日被困在被窝密室里长达三小时，凶器是软绵绵的枕头，动机是太困了。" },
   { fortune: "中吉", title: "暴风雪山庄预警", content: "如果今天不想洗头不想出门，就假装窗外下着暴风雪，断绝了与外界的一切物理联系。" },
@@ -748,16 +738,12 @@ const GACHA_LIST = [
   { fortune: "吉", title: "真凶竟是我自己", content: "找了半天找不到钥匙/手机，最后在自己手里摸到了——破案了，凶手正是你自己。" },
   { fortune: "小凶", title: "红鲱鱼诱饵", content: "今天千万别被突如其来的廉价折扣吸引，那只是商家的红鲱鱼误导诡计。" },
   { fortune: "中吉", title: "暗号对切", content: "去买奶茶时在心里默念三遍特工代号，假装吸管是一支微型毒针枪。" },
-
-  // 🐱 131-145：猫咪视角的无理取闹哲学
   { fortune: "大吉", title: "猫咪液体定律", content: "今日宜：像猫一样流淌在沙发的每一个缝隙里，骨头是什么？今天不需要。" },
   { fortune: "中吉", title: "故意推翻杯子", content: "今天允许你内心叛逆五秒钟，假装自己是只手欠的小猫，对讨厌的人翻个白眼。" },
   { fortune: "特吉", title: "罐头开盖之音", content: "今日你的耳朵灵敏度提升十倍，方圆三里内任何关于‘吃什么’的窃窃私语都逃不过你。" },
   { fortune: "大凶", title: "被摸肚皮翻脸", content: "今日社交安全距离为一米，谁要是敢跟你套近乎话太多，爪子伺候！" },
   { fortune: "小吉", title: "晒肚皮指南", content: "找个有阳光的地方躺下，把所有烦恼像翻肚皮一样晾出来，晒一晒就蒸发了。" },
   { fortune: "吉", title: "纸箱子狂喜", content: "越昂贵的期望越让你窒息，反而是一个没人管的廉价小角落最能让你呼噜呼噜。" },
-
-  // 😈 146-160：损友特供·谁抽到谁认栽
   { fortune: "绝凶", title: "强制请客咒", content: "警报！截屏发给发链接给你的那个朋友，今天必须请他喝一杯杨枝甘露方可解咒。" },
   { fortune: "特吉", title: "免骂金牌", content: "恭喜抽到今日免死金牌，今天不管你说了多离谱的胡话，大家都得夸你可爱。" },
   { fortune: "中吉", title: "朋友圈仅一人可见", content: "今日宜：发一条莫名其妙的胡言乱语朋友圈，让暗中观察你的人抓耳挠腮去猜。" },
