@@ -457,69 +457,98 @@ body, .profile-card, .info-section, .info-item, .hobby-pill, .fortune-card, .gac
   transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* 🌙 深夜模式专用皮肤（高对比度优化版） */
+/* 🌙 深夜模式专用皮肤（清晰通透版） */
 body.night-mode {
-  background-color: #261e23;
+  background-color: #21191f;
   background-image: radial-gradient(#3a2e37 1.5px, transparent 1.5px);
-  color: #f0e6ec;
+  color: #f7eef3;
 }
 
 body.night-mode .theme-toggle-btn {
   background: rgba(54, 44, 54, 0.9);
-  border-color: #6a5367;
+  border-color: #7b6277;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 body.night-mode .theme-text {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
-body.night-mode .profile-card,
-body.night-mode .info-item,
-body.night-mode .hobby-pill,
-body.night-mode .fortune-card {
-  background: #332832;
+body.night-mode .profile-card {
+  background: #2d242c;
   border-color: #4e3a4b;
-  color: #f2e7ee;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
 }
 
 body.night-mode .info-section,
 body.night-mode .gacha-widget {
-  background: #2b222a;
-  border-color: #5e465a;
+  background: #251d24;
+  border-color: #5c4558;
 }
 
-body.night-mode h1,
-body.night-mode .fortune-title {
-  color: #ffffff;
+body.night-mode h1 {
+  color: #ffffff !important;
 }
 
 body.night-mode .subtitle {
-  color: #dfced9; /* 清晰可辨的浅粉灰 */
+  color: #e5d4de !important; /* 副标题明亮粉灰 */
 }
 
 body.night-mode .section-title {
-  color: #ffaa9d;
+  color: #ff9a8b !important;
+}
+
+/* 🌟 核心提亮：档案小方块 */
+body.night-mode .info-item {
+  background: #3c303b !important;
+  border: 1px solid #5d485a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 body.night-mode .info-label {
-  color: #d8c5d1; /* 标签小字清晰明了 */
+  color: #f0cddb !important; /* 标签：软糯奶粉色，极清晰 */
 }
 
 body.night-mode .info-value {
-  color: #ffffff; /* 档案数值高亮纯白 */
+  color: #ffffff !important; /* 内容：纯白发光体 */
 }
 
+/* 🌟 核心提亮：充电清单小药丸 */
+body.night-mode .hobby-pill {
+  background: #3c303b !important;
+  color: #ffeef4 !important; /* 字体变成亮粉白 */
+  border-color: #634d60 !important;
+}
+
+body.night-mode .hobby-pill:hover {
+  background: #523f50 !important;
+  color: #ffb4a2 !important;
+}
+
+/* 状态与气泡 */
 body.night-mode .status-badge {
-  background: #6a4c82;
-  color: #ffffff;
+  background: #73528d !important;
+  color: #ffffff !important;
 }
 
 body.night-mode .gacha-bubble {
-  background: #3a2e39;
-  color: #ffccd5;
-  border-color: #6a5065;
+  background: #3c303b !important;
+  color: #ffccd5 !important;
+  border-color: #6a5065 !important;
+}
+
+/* 弹窗小卡片夜间高亮 */
+body.night-mode .fortune-card {
+  background: #332731;
+  border-color: #5a4256;
+}
+
+body.night-mode .fortune-title {
+  color: #ffffff !important;
+}
+
+body.night-mode .fortune-content {
+  color: #ebdbe4 !important;
 }
 </style>
 </head>
